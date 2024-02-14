@@ -16,7 +16,7 @@ import java.util.logging.SimpleFormatter
 // import java.util.List
 
 class LogManager {
-        //public static String logFolderName;
+        //public static String logFolderName
         lateinit var logger: Logger
         lateinit var logFileFull: String
         // 
@@ -25,19 +25,19 @@ class LogManager {
         }
         // Check Log file
         fun configureLogManager(logName: String, appendMode: Boolean) {
-            val logParentFolderNames = arrayOf("/var/log","/var/lib");
-            val logFileName = logName + ".log";
+            val logParentFolderNames = arrayOf("/var/log","/var/lib")
+            val logFileName = logName + ".log"
 
             val logParentFoldersPath = Array<Path?>(logParentFolderNames.size) { null }
             for (i in logParentFolderNames.indices) {
-                logParentFoldersPath[i] = Paths.get(logParentFolderNames[i]);
+                logParentFoldersPath[i] = Paths.get(logParentFolderNames[i])
             }
 
-            var logParentFolderName = ".";
+            var logParentFolderName = "."
             for (i in logParentFolderNames.indices){
                 if (Files.exists(logParentFoldersPath[i])){
-                    logParentFolderName = logParentFolderNames[i];
-                    break;
+                    logParentFolderName = logParentFolderNames[i]
+                    break
                 }
             }
 
@@ -46,58 +46,58 @@ class LogManager {
             if (!Files.exists(logFolderPath)) {
                 if (hasWritePrivileges(logParentFolderName)){
                     try{
-                        Files.createDirectories(logFolderPath);
-                        //logFileName = logFolderName+"/"+logFileName;
+                        Files.createDirectories(logFolderPath)
+                        //logFileName = logFolderName+"/"+logFileName
                     } catch (e: IOException) {
-                        System.err.println("Failed to create log folder at "+logFolderName+". Proceeding with logging to file deactivated.");
+                        System.err.println("Failed to create log folder at "+logFolderName+". Proceeding with logging to file deactivated.")
                     }
                 } else {
-                    System.err.println("No write privileges at "+logParentFolderName);
-                    System.err.println("Try running the program as root to write the log directory structure.");
+                    System.err.println("No write privileges at "+logParentFolderName)
+                    System.err.println("Try running the program as root to write the log directory structure.")
                 }
             }
 
-            val logger: Logger = Logger.getLogger(logName);
+            val logger: Logger = Logger.getLogger(logName)
             try {
                 // Create a file handler that writes log messages to a file
-                this.logFileFull = logFolderName+"/"+logFileName;
-                val fileHandler: FileHandler = FileHandler(logFolderName+"/"+logFileName,appendMode);
-                fileHandler.setFormatter(SimpleFormatter());
+                this.logFileFull = logFolderName+"/"+logFileName
+                val fileHandler: FileHandler = FileHandler(logFolderName+"/"+logFileName,appendMode)
+                fileHandler.setFormatter(SimpleFormatter())
 
                 // Add the file handler to the logger
-                logger.addHandler(fileHandler);
+                logger.addHandler(fileHandler)
             } catch (e: IOException) {
-                System.err.println("Could not open log file "+logFolderName+"/"+logFileName+" for writing. Proceeding with logging to file deactivated.");
+                System.err.println("Could not open log file "+logFolderName+"/"+logFileName+" for writing. Proceeding with logging to file deactivated.")
             }
-            this.logger = logger;
+            this.logger = logger
         }
 
-        // public void info(String message) {
-        //     logger.info(message);
-        // }
+        fun info(message: String) {
+            logger.info(message)
+        }
 
-        // public void warning(String message) {
-        //     logger.warning(message);
-        // }
+        fun warning(message: String) {
+            logger.warning(message)
+        }
 
-        // public String getLastLine() {
-        //     Path logFilePath = Path.of(this.logFileFull);
-        //     String readLine = "";
-        //     try {
-        //         // Read all lines from the log file
-        //         List<String> logLines = Files.readAllLines(logFilePath);
-        //         // Check if the file has at least two lines
-        //         if (logLines.size() > 0) {
-        //             // Access the second line (index 1)
-        //             readLine = logLines.get(logLines.size()-1);
-        //             // You can parse and analyze the second line as needed
-        //         } else {
-        //             System.out.println("The log file is empty. No data to read from.");
-        //         }
-        //     } catch (IOException e) {
-        //         //e.printStackTrace();
-        //         System.err.println("Could not read log file "+this.logFileFull);
-        //     }
-        //     return readLine;
-        // }
+        fun getLastLine(): String {
+            val logFilePath: Path = Path.of(this.logFileFull)
+            var readLine: String = ""
+            try {
+                // Read all lines from the log file
+                val logLines: List<String> = Files.readAllLines(logFilePath)
+                // Check if the file has at least two lines
+                if (logLines.size > 0) {
+                    // Access the second line (index 1)
+                    readLine = logLines.get(logLines.size-1)
+                    // You can parse and analyze the second line as needed
+                } else {
+                    println("The log file is empty. No data to read from.")
+                }
+            } catch (e: IOException) {
+                //e.printStackTrace()
+                System.err.println("Could not read log file "+this.logFileFull)
+            }
+            return readLine
+        }
 }

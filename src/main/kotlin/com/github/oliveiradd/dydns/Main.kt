@@ -6,11 +6,11 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 //check if file is writable
-// import java.nio.file.Filesystems;
+// import java.nio.file.Filesystems
 
 val projectName = "dydns"
 val logger = LogManager(projectName,true)
-val ipMonitor = LogManager("ipMonitor",true);
+val ipMonitor = LogManager("ipMonitor",true)
 
 fun main() {
     
@@ -31,8 +31,8 @@ fun hasWritePrivileges(configFolder: String): Boolean {
     val path = Paths.get(configFolder)
 
     if (Files.isWritable(path)) {
-        return true;
+        return true
     } else {
-        return false;
+        return false
     }
 }
