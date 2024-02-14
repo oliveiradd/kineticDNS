@@ -1,4 +1,4 @@
-package com.github.oliveiradd.dydns
+package com.github.oliveiradd.kineticDNS
 
 // work with files and paths
 import java.nio.file.Files
@@ -8,7 +8,7 @@ import java.nio.file.Paths
 //check if file is writable
 // import java.nio.file.Filesystems
 
-val projectName = "dydns"
+val projectName = "kineticDNS"
 val logger = LogManager(projectName,true)
 val ipMonitor = LogManager("ipMonitor",true)
 

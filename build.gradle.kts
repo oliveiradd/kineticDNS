@@ -13,9 +13,9 @@ repositories {
     mavenCentral()
 }
 
-group = "com.github.oliveiradd.dydns"
+group = "com.github.oliveiradd.kineticDNS"
 version = "1.0.0"
-description = "dydns"
+description = "kineticDNS"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -33,7 +33,7 @@ tasks.withType<Javadoc>() {
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "com.github.oliveiradd.dydns.MainKt" //add Kt after the "Main" class
+        attributes["Main-Class"] = "com.github.oliveiradd.kineticDNS.MainKt" //add Kt after the "Main" class
     }
 }
 

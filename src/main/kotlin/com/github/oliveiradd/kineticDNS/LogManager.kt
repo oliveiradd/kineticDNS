@@ -1,4 +1,4 @@
-package com.github.oliveiradd.dydns
+package com.github.oliveiradd.kineticDNS
 
 import java.io.IOException
 
