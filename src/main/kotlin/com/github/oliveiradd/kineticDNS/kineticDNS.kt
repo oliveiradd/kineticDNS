@@ -9,7 +9,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 // used by isResponseAppropriate
-import java.util.HashSet;
+// import java.util.HashSet;
 
 class kineticDNS {
     val userAgent: String = "kineticDNS/0.9";
