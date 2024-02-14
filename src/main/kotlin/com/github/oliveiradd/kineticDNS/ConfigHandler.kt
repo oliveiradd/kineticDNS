@@ -58,7 +58,7 @@ class ConfigHandler {
         // Define DNS service provider
         println("Enter your dynamic DNS service provider:")
         for (i in DDNSProviders.indices) {
-            println("$(i+1)) $DDNSProviders[i]")
+            println("(${i+1}) ${DDNSProviders[i]}")
         }
         val providerOption = readLine()!!.toInt() 
         if (providerOption < 1 || providerOption > DDNSProviders.size) {
@@ -86,7 +86,7 @@ class ConfigHandler {
         // Define public IP address retrieval service
         println("Enter your public IP address lookup service provider:")
         for (i in IPLookupServices.indices) {
-            println("$(i+1)) $IPLookupServices[i]")
+            println("(${i+1}) ${IPLookupServices[i]}")
         }
         val ipLookupProviderOption: Int = readLine()!!.toInt()
         if (ipLookupProviderOption < 1 || ipLookupProviderOption > IPLookupServices.size) {
