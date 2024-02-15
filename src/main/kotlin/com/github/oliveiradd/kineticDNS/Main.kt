@@ -62,7 +62,7 @@ fun main(args: Array<String>) {
     configHandler.readConfig()
     val DDNS_provider: String = configHandler.getProperty("DDNS_provider")
     val IPLookup_service: String = configHandler.getProperty("IPLookup_service")
-    //String currentIP = kineticDNS.getCurrentIP()
+    //String currentIP = KineticDNS.getCurrentIP()
     
     if (DDNS_provider.equals(ConfigHandler.DDNSProviders[0])) {
         val username: String = configHandler.getProperty(ConfigHandler.NoIPConfigurationParameters[0])
@@ -72,10 +72,10 @@ fun main(args: Array<String>) {
         //procedes to update DDNS
         //System.out.println(username+" "+password+" "+hostname+" "+domain)
         try {
-            val currentIP: String = kineticDNS.getCurrentIP(IPLookup_service)
+            val currentIP: String = KineticDNS.getCurrentIP(IPLookup_service)
             if (!(ipMonitor.getLastLine().contains(currentIP)) || operation.equals("force-update")) {
-                val response: String = kineticDNS.NoIpUpdate(username, password, hostname, domain)
-                if (kineticDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP)
+                val response: String = KineticDNS.NoIpUpdate(username, password, hostname, domain)
+                if (KineticDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP)
             }
         } catch (e: IOException) {
             logger.warning("Failed to get current IP address.")
@@ -90,10 +90,10 @@ fun main(args: Array<String>) {
         //procedes to update DDNS
         //System.out.println(username+" "+password+" "+hostname+" "+domain)
         try {
-            val currentIP: String = kineticDNS.getCurrentIP(IPLookup_service)
+            val currentIP: String = KineticDNS.getCurrentIP(IPLookup_service)
             if (!(ipMonitor.getLastLine().contains(currentIP)) || operation.equals("--force")) {
-                val response: String = kineticDNS.DynDNSUpdate(username, password, hostname, domain,currentIP)
-                if (kineticDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP)
+                val response: String = KineticDNS.DynDNSUpdate(username, password, hostname, domain,currentIP)
+                if (KineticDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP)
             }
         } catch (e: IOException) {
             logger.warning("Failed to get current IP address.")
@@ -104,10 +104,10 @@ fun main(args: Array<String>) {
         val token: String = configHandler.getProperty(ConfigHandler.DuckDNSConfigurationParameters[0])
         val hostname: String = configHandler.getProperty(ConfigHandler.DuckDNSConfigurationParameters[1])
         try {
-            val currentIP: String = kineticDNS.getCurrentIP(IPLookup_service)
+            val currentIP: String = KineticDNS.getCurrentIP(IPLookup_service)
             if (!(ipMonitor.getLastLine().contains(currentIP)) || operation.equals("--force")) {
-                val response: String = kineticDNS.DuckDNSUpdate(hostname, token)
-                if (kineticDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP)
+                val response: String = KineticDNS.DuckDNSUpdate(hostname, token)
+                if (KineticDNS.isResponseAppropriate(response)) ipMonitor.info("Retrieved IP: "+currentIP)
             }
         } catch (e: IOException) {
             logger.warning("Failed to get current IP address.")

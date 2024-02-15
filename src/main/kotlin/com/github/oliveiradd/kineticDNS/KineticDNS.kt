@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets
 // used by isResponseAppropriate
 // import java.util.HashSet
 
-class kineticDNS {
+class KineticDNS {
     companion object {
         val userAgent: String = "kineticDNS/0.9"
 
