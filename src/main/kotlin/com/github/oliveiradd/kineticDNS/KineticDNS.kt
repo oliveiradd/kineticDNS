@@ -6,6 +6,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URI
 import java.nio.charset.StandardCharsets
 
 // used by isResponseAppropriate
@@ -17,7 +18,7 @@ class KineticDNS {
 
         @Throws(IOException::class)
         fun getCurrentIP(IPLookup_service: String): String {
-            val url: URL = URL("https://"+IPLookup_service)
+            val url: URL = URI("https://"+IPLookup_service).toURL()
             BufferedReader(InputStreamReader(url.openStream(), StandardCharsets.UTF_8)).use { reader ->
                 val retrievedIP = reader.readLine()?.trim()
                 return retrievedIP ?: throw IOException("Failed to retrieve IP")
@@ -27,7 +28,7 @@ class KineticDNS {
         fun NoIpUpdate(username: String,password: String,hostname: String,domain: String): String {
             val provider: String = ConfigHandler.DDNSProviders[0]
             val updateUrl: String = String.format("https://dynupdate.no-ip.com/nic/update?hostname=%s.%s",hostname,domain)
-            val url: URL = URL(updateUrl)
+            val url: URL = URI(updateUrl).toURL()
 
             val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
             connection.setRequestProperty("User-Agent",userAgent)
@@ -51,7 +52,7 @@ class KineticDNS {
         fun DynDNSUpdate(username: String, password: String, hostname: String, domain: String, ipAddress: String): String {
             val provider: String = ConfigHandler.DDNSProviders[1]
             val updateUrl: String = String.format("https://members.dyndns.org/v3/update?hostname=%s.%s&myip=%s",hostname,domain,ipAddress)
-            val url: URL = URL(updateUrl)
+            val url: URL = URI(updateUrl).toURL()
 
             val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
             connection.setRequestProperty("User-Agent",userAgent)
@@ -75,7 +76,7 @@ class KineticDNS {
         fun DuckDNSUpdate(subdomain: String, token: String): String {
             val provider: String = ConfigHandler.DDNSProviders[2]
             val updateUrl: String = String.format("https://www.duckdns.org/update?domains=%s&token=%s",subdomain,token)
-            val url: URL = URL(updateUrl)
+            val url: URL = URI(updateUrl).toURL()
 
             val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
             connection.setRequestProperty("User-Agent",userAgent)
