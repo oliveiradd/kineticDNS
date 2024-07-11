@@ -9,7 +9,8 @@ import java.util.logging.Logger
 class ConfigHandler {
 
     var properties: Properties
-    var filePath: String
+    var configFile: String = ""
+    var configFolder: String
     
     companion object {
         val DDNSProviders = arrayOf("No-IP","DynDNS","DuckDNS")
@@ -20,9 +21,9 @@ class ConfigHandler {
         val defaultIPLookupService = IPLookupServices[1]
     }
 
-    constructor(filePath: String) {
+    constructor(configFolder: String) {
         properties = Properties()
-        this.filePath = filePath
+        this.configFolder = configFolder
     }
 
     fun getProperty(key: String): String {
@@ -33,9 +34,9 @@ class ConfigHandler {
         properties.setProperty(key, keyValue)
     }
 
-    fun readConfig() {
+    fun readConfig(configFile: String) {
         try {
-            val input: FileInputStream = FileInputStream(this.filePath)
+            val input: FileInputStream = FileInputStream(this.configFolder+"/"+configFile)
             properties.load(input)
         } catch (e: IOException) {
             logger.warning("Failed to open configuration file for reading!")
@@ -44,7 +45,7 @@ class ConfigHandler {
 
     fun writeConfig() {
         try {
-            val output: FileOutputStream = FileOutputStream(this.filePath)
+            val output: FileOutputStream = FileOutputStream(this.configFolder+"/"+this.configFile)
             properties.store(output, "Configuration Properties")
             logger.info("Configuration file written successfully!")
         } catch (e: IOException) {
@@ -95,8 +96,14 @@ class ConfigHandler {
         } else {
             this.setProperty("IPLookup_service",IPLookupServices[ipLookupProviderOption-1])
         }
+        //determine configFile
+        when (providerOption) {
+            1,2 -> this.configFile = this.getProperty("hostname")+"."+this.getProperty("domain") // noip & dyndns
+            3 -> this.configFile = this.getProperty("hostname")+".duckdns.org"
+        }
+
         // Write to config file
         this.writeConfig()
-        println("Configuration file created at "+filePath)
+        println("Configuration file created at "+this.configFolder+"/"+this.configFile)
     }
 }

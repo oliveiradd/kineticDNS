@@ -60,8 +60,8 @@ fun main(args: Array<String>) {
         System.err.println("Could not create list of configuration files.")
         return
     } else if ((configFiles.isEmpty() || operation.equals("configure")) && hasWritePrivileges(configFolderName)) {
-        System.out.println("Configurion "+projectName+"...")
-        val configHandler: ConfigHandler = ConfigHandler(configFolderName+"/"+configFileName)
+        System.out.println("Configuring "+projectName+"...")
+        val configHandler: ConfigHandler = ConfigHandler(configFolderName)
         configHandler.createConfig()
         return
     }
@@ -73,7 +73,7 @@ fun main(args: Array<String>) {
     for (configFile in configFiles) {
         val configFilePath: Path = Paths.get(configFolderName+"/"+configFile)
     
-        val configHandler: ConfigHandler = ConfigHandler(configFolderName+"/"+configFile)
+        val configHandler: ConfigHandler = ConfigHandler(configFolderName)
 
         val ipMonitor = LogManager("ipMonitor-"+configFile,true)
             
@@ -90,7 +90,7 @@ fun main(args: Array<String>) {
                 return
             }
         }
-        configHandler.readConfig()
+        configHandler.readConfig(configFile)
         val DDNS_provider: String = configHandler.getProperty("DDNS_provider")
         val IPLookup_service: String = configHandler.getProperty("IPLookup_service")
         //String currentIP = KineticDNS.getCurrentIP()
